@@ -22,7 +22,7 @@ export default {
   },
   mounted: async function() {
     this.questions = await fetchQuestions(
-      'https://opentdb.com/api.php?amount=10&category=11&difficulty=easy&type=multiple'
+      'https://opentdb.com/api.php?amount=10&category=17&difficulty=easy&type=multiple'
     );
   },
   data() {
