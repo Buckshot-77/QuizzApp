@@ -31,3 +31,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  .question-box-container{
+    margin-top: 30px;
+    display: grid;
+  }
+</style>
