@@ -7,34 +7,96 @@
 
       <hr class="my-4" />
 
-      <p>
-        List of answers
-      </p>
+      <b-list-group class="answer-list">
+        <b-list-group-item
+          class="answer-alternative"
+          v-for="(answer, index) in shuffledAnswers"
+          :key="index"
+          @click="selectAnswer(index)"
+          :class="[selectedIndex === index ? 'selected-answer' : '']"
+          >{{ answer }}</b-list-group-item
+        >
+      </b-list-group>
 
-      <b-button variant="primary" href="#">Submit</b-button>
-      <b-button variant="success" href="#" @click="next">Next</b-button>
+      <b-button variant="primary" href="#" class="button">Submit</b-button>
+      <b-button variant="success" href="#" @click="next" class="button"
+        >Next</b-button
+      >
     </b-jumbotron>
   </div>
 </template>
 
 <script>
+import _ from 'lodash';
 export default {
   props: {
     currentQuestion: Object,
     next: Function,
   },
+  watch: {
+    currentQuestion: {
+      immediate: true,
+      handler() {
+        this.selectedIndex = null;
+        this.shuffleAnswers();
+      },
+    },
+  },
+  data() {
+    return {
+      selectedIndex: null,
+      shuffledAnswers: [],
+    };
+  },
   computed: {
     answers() {
       let answers = [...this.currentQuestion.incorrect_answers];
-      return answers.push(this.currentQuestion.correct_answer);
+      answers.push(this.currentQuestion.correct_answer);
+      return answers;
+    },
+  },
+  methods: {
+    selectAnswer(index) {
+      this.selectedIndex = index;
+    },
+    shuffleAnswers() {
+      let answers = [
+        ...this.currentQuestion.incorrect_answers,
+        this.currentQuestion.correct_answer,
+      ];
+      this.shuffledAnswers = _.shuffle(answers);
     },
   },
 };
 </script>
 
 <style scoped>
-  .question-box-container{
-    margin-top: 30px;
-    justify-self: center;
-  }
+.question-box-container {
+  margin: 30px 30px;
+  justify-self: center;
+}
+.answer-list {
+  margin: 10px;
+}
+.button {
+  margin: 0 5px;
+}
+.answer-alternative:hover {
+  cursor: pointer;
+  background-color: rgb(24, 173, 173);
+  color: ivory;
+}
+
+.selected-answer {
+  background-color: rgb(24, 173, 173);
+  color: ivory;
+}
+
+.correct-answer {
+  background-color: green;
+}
+
+.incorrect-answer {
+  background-color: red;
+}
 </style>
