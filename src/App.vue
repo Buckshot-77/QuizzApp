@@ -1,16 +1,11 @@
 <template>
   <div id="app">
     <Header :counter="index + 1" />
-    <b-container class="bv-example-row">
-      <b-row>
-        <b-col sm="6" >
-          <QuestionBox
-            v-if="questions.length"
-            :currentQuestion="questions[index]"
-            :next="next"
-        /></b-col>
-      </b-row>
-    </b-container>
+    <QuestionBox
+      v-if="questions.length"
+      :currentQuestion="questions[index]"
+      :next="next"
+    />
   </div>
 </template>
 
@@ -59,11 +54,4 @@ export default {
   color: #2c3e50;
   display: grid;
 }
-.bv-example-row{
-  justify-content: center;
-}
-.row{
-  justify-content: center;
-}
-
 </style>
