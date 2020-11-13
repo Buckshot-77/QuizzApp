@@ -3,7 +3,7 @@
     <Header :counter="index + 1" />
     <b-container class="bv-example-row">
       <b-row>
-        <b-col sm="6" offset="3">
+        <b-col sm="6" >
           <QuestionBox
             v-if="questions.length"
             :currentQuestion="questions[index]"
@@ -50,11 +50,20 @@ export default {
 
 <style>
 #app {
+  margin: 0;
+  padding: 0;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  display: grid;
 }
+.bv-example-row{
+  justify-content: center;
+}
+.row{
+  justify-content: center;
+}
+
 </style>

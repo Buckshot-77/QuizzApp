@@ -35,6 +35,7 @@ export default {
 <style scoped>
   .question-box-container{
     margin-top: 30px;
-    display: grid;
+    align-self: center;
+    justify-self: center;
   }
 </style>
