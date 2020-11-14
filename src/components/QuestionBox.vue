@@ -18,7 +18,13 @@
         >
       </b-list-group>
 
-      <b-button variant="primary" href="#" class="button">Submit</b-button>
+      <b-button
+        variant="primary"
+        @click="submitAnswer"
+        class="button"
+        :disabled="selectedIndex === null"
+        >Submit</b-button
+      >
       <b-button variant="success" href="#" @click="next" class="button"
         >Next</b-button
       >
@@ -32,6 +38,7 @@ export default {
   props: {
     currentQuestion: Object,
     next: Function,
+    increment: Function
   },
   watch: {
     currentQuestion: {
@@ -46,6 +53,7 @@ export default {
     return {
       selectedIndex: null,
       shuffledAnswers: [],
+      hasAnsweredQuestion: false,
     };
   },
   computed: {
@@ -65,6 +73,13 @@ export default {
         this.currentQuestion.correct_answer,
       ];
       this.shuffledAnswers = _.shuffle(answers);
+    },
+    submitAnswer() {
+      let isCorrect = false;
+      if (this.selectedIndex === this.correctIndex) {
+        isCorrect = true;
+      }
+      this.increment(isCorrect);
     },
   },
 };
