@@ -25,7 +25,7 @@
         :disabled="selectedIndex === null || hasAnsweredQuestion"
         >Submit</b-button
       >
-      <b-button variant="success" href="#" @click="next" class="button"
+      <b-button variant="success" href="#" @click="next" class="button" :disabled="!hasAnsweredQuestion"
         >Next</b-button
       >
     </b-jumbotron>
