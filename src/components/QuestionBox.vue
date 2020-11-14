@@ -54,6 +54,7 @@ export default {
       selectedIndex: null,
       shuffledAnswers: [],
       hasAnsweredQuestion: false,
+      correctIndex: null
     };
   },
   computed: {
@@ -73,6 +74,7 @@ export default {
         this.currentQuestion.correct_answer,
       ];
       this.shuffledAnswers = _.shuffle(answers);
+      this.correctIndex = this.shuffledAnswers.indexOf(this.currentQuestion.correct_answer);
     },
     submitAnswer() {
       let isCorrect = false;
