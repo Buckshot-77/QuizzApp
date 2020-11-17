@@ -13,7 +13,17 @@
           v-for="(answer, index) in shuffledAnswers"
           :key="index"
           @click="selectAnswer(index)"
-          :class="[selectedIndex === index ? 'selected-answer' : '', index === correctIndex  && hasAnsweredQuestion ? 'correct-answer' : '', selectedIndex === index && hasAnsweredQuestion && selectedIndex !== correctIndex ? 'incorrect-answer' : '']"
+          :class="[
+            selectedIndex === index ? 'selected-answer' : '',
+            index === correctIndex && hasAnsweredQuestion
+              ? 'correct-answer'
+              : '',
+            selectedIndex === index &&
+            hasAnsweredQuestion &&
+            selectedIndex !== correctIndex
+              ? 'incorrect-answer'
+              : '',
+          ]"
           >{{ answer }}</b-list-group-item
         >
       </b-list-group>
@@ -25,13 +35,11 @@
         :disabled="selectedIndex === null || hasAnsweredQuestion"
         >Submit</b-button
       >
-      <b-button variant="success" :disabled="!hasAnsweredQuestion" @click="() => {
-        if(hasAnsweredQuestion){
-        next()
-        }else{
-          return;
-        }
-        }" class="button" 
+      <b-button
+        variant="success"
+        :disabled="!hasAnsweredQuestion"
+        @click="handleNext"
+        class="button"
         >Next</b-button
       >
     </b-jumbotron>
@@ -44,7 +52,7 @@ export default {
   props: {
     currentQuestion: Object,
     next: Function,
-    increment: Function
+    increment: Function,
   },
   watch: {
     currentQuestion: {
@@ -61,7 +69,7 @@ export default {
       selectedIndex: null,
       shuffledAnswers: [],
       hasAnsweredQuestion: false,
-      correctIndex: null
+      correctIndex: null,
     };
   },
   computed: {
@@ -73,7 +81,9 @@ export default {
   },
   methods: {
     selectAnswer(index) {
-      this.selectedIndex = index;
+      if (!this.hasAnsweredQuestion) {
+        this.selectedIndex = index;
+      }
     },
     shuffleAnswers() {
       let answers = [
@@ -81,7 +91,9 @@ export default {
         this.currentQuestion.correct_answer,
       ];
       this.shuffledAnswers = _.shuffle(answers);
-      this.correctIndex = this.shuffledAnswers.indexOf(this.currentQuestion.correct_answer);
+      this.correctIndex = this.shuffledAnswers.indexOf(
+        this.currentQuestion.correct_answer
+      );
     },
     submitAnswer() {
       let isCorrect = false;
@@ -90,6 +102,13 @@ export default {
       }
       this.hasAnsweredQuestion = true;
       this.increment(isCorrect);
+    },
+    handleNext() {
+      if (this.hasAnsweredQuestion) {
+        this.next();
+      } else {
+        return;
+      }
     },
   },
 };
